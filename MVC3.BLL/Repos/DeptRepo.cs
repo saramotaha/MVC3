@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MVC3.BLL.Repos
 {
-    internal class DeptRepo : IDeptInterface
+    public class DeptRepo : IDeptInterface
     {
         private readonly AppDbContext _appDbContext;
 

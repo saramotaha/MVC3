@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVC3.BLL.Interfaces;
+using MVC3.BLL.Repos;
 using MVC3.DAL.Data;
 using System;
 using System.Collections.Generic;
@@ -45,6 +47,8 @@ namespace MVC3
 
 
             services.AddDbContext<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("TheDefault")));
+
+            services.AddScoped<IDeptInterface, DeptRepo>();
 
            
 
