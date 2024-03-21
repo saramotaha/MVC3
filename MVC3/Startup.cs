@@ -15,12 +15,15 @@ namespace MVC3
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }=null;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+       
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -41,7 +44,7 @@ namespace MVC3
             //services.AddDbContext<AppDbContext>(option=>option.UseSqlServer("Server=.;Database=AppMVC3;Trusted_Connection=True;MultipleActiveResultSets=True;Encrypt=False"));
 
 
-            services.AddDbContext<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("default")));
+            services.AddDbContext<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("TheDefault")));
 
            
 
