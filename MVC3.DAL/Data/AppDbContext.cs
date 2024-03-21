@@ -9,15 +9,13 @@ using System.Threading.Tasks;
 
 namespace MVC3.DAL.Data
 {
-    internal class AppDbContext:DbContext
+    public class AppDbContext:DbContext
     {
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public AppDbContext(DbContextOptions<AppDbContext> option) :base(option)
         {
-            optionsBuilder.UseSqlServer("Server=.;Database=AppMVC3;Trusted_Connection=True;MultipleActiveResultSets=True;Encrypt=False");
+            
         }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

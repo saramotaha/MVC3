@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVC3.DAL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,18 @@ namespace MVC3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            //services.AddScoped<AppDbContext>();
+            //services.AddSingleton<AppDbContext>();
+            //services.AddTransient<AppDbContext>();
+
+
+
+            //services.AddScoped<DbContextOptions<AppDbContext>>();
+
+
+
+            services.AddDbContext<AppDbContext>(option=>option.UseSqlServer("Server=.;Database=AppMVC3;Trusted_Connection=True;MultipleActiveResultSets=True;Encrypt=False"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
