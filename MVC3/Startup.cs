@@ -37,7 +37,14 @@ namespace MVC3
 
 
 
-            services.AddDbContext<AppDbContext>(option=>option.UseSqlServer("Server=.;Database=AppMVC3;Trusted_Connection=True;MultipleActiveResultSets=True;Encrypt=False"));
+
+            //services.AddDbContext<AppDbContext>(option=>option.UseSqlServer("Server=.;Database=AppMVC3;Trusted_Connection=True;MultipleActiveResultSets=True;Encrypt=False"));
+
+
+            services.AddDbContext<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("default")));
+
+           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
