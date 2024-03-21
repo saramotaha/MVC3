@@ -14,7 +14,7 @@
 {
     
 
-    <table>
+    <table class="table table-hover table-striped m-4">
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(D=>D.Code)</th>
@@ -37,10 +37,17 @@
                     <td>@dept.DateOfCreation</td>
                     <td>
                         <a asp-controller="dept" asp-action="Details" class="btn btn-warning" >Details</a>
-                        <a asp-controller="dept" asp-action="Update" class="btn btn-warning" >Update</a>
-                        <a asp-controller="dept" asp-action="Delete" class="btn btn-warning" >Delete</a>
+                      
                     </td>
-                    <td>@Html.DisplayNameFor(D => D.DateOfCreation)</td>
+                    <td>
+                        <a asp-controller="dept" asp-action="Update" class="btn btn-warning">Update</a>
+                        
+                    </td> 
+                    <td>
+                        <a asp-controller="dept" asp-action="Delete" class="btn btn-warning">Delete</a>
+                        
+                    </td>
+                    @* <td>@Html.DisplayNameFor(D => D.DateOfCreation)</td> *@
                 </tr>
                 
             }
