@@ -21,7 +21,8 @@ namespace MVC3.PL.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var departments = _deptRepo.GetAll();
+            return View(departments);
         }
     }
 }
