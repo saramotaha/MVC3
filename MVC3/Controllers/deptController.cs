@@ -113,6 +113,7 @@ namespace MVC3.PL.Controllers
 
 
         [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public IActionResult Update([FromRoute]int id , Department department)
         {
             if(id!=department.Id)
