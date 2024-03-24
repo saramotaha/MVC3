@@ -26,11 +26,16 @@ namespace MVC3.PL.Controllers
             return View(departments);
         }
 
+
+
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+
+
+
         [HttpPost]
         public IActionResult Create(Department department)
         {
@@ -45,6 +50,29 @@ namespace MVC3.PL.Controllers
             }
 
            return View(department);
+        }
+
+
+
+
+        public IActionResult Details(int? id)
+        {
+
+            if (!id.HasValue)
+            {
+                return BadRequest();
+            }
+
+            var Thedept = _deptRepo.GetById(id.Value);
+            
+            if(Thedept is null)
+            {
+                return NotFound();
+            }
+
+
+            return View(Thedept);
+
         }
 
 
