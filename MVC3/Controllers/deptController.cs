@@ -113,9 +113,12 @@ namespace MVC3.PL.Controllers
 
 
         [HttpPost]
-        public IActionResult Update(Department department)
+        public IActionResult Update([FromRoute]int id , Department department)
         {
-
+            if(id!=department.Id)
+            {
+                return BadRequest("Error ");
+            }
             if (!ModelState.IsValid) {
             
                 return View(department);
