@@ -150,6 +150,26 @@ namespace MVC3.PL.Controllers
 
 
         }
+
+
+
+        public IActionResult Delete(int? id)
+        {
+            return Details(id, "Delete");
+        }
+
+
+
+        [HttpPost]
+        public IActionResult Delete(Department department)
+        {
+            _deptRepo.Delete(department);
+            return RedirectToAction("Index");
+
+        }
+
+
+
     }
 }
 
