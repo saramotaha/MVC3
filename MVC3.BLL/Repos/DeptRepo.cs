@@ -24,7 +24,7 @@ namespace MVC3.BLL.Repos
         {
             _appDbContext.Departments.Add(d);
 
-            return (_appDbContext.SaveChanges());
+            return _appDbContext.SaveChanges();
         }
 
         public int Delete(Department d)

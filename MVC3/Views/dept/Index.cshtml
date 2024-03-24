@@ -40,11 +40,11 @@
                       
                     </td>
                     <td>
-                        <a asp-controller="dept" asp-action="Update" class="btn btn-warning">Update</a>
+                        <a asp-controller="dept" asp-action="Update" asp-route-id="@dept.Id" class="btn btn-warning">Update</a>
                         
                     </td> 
                     <td>
-                        <a asp-controller="dept" asp-action="Delete" class="btn btn-warning">Delete</a>
+                        <a asp-controller="dept" asp-action="Delete" asp-route-id="@dept.Id" class="btn btn-warning">Delete</a>
                         
                     </td>
                     @* <td>@Html.DisplayNameFor(D => D.DateOfCreation)</td> *@

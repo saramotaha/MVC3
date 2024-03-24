@@ -1,20 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Hosting;
 using MVC3.BLL.Interfaces;
 using MVC3.BLL.Repos;
 using MVC3.DAL.Models;
+using System;
+
 
 namespace MVC3.PL.Controllers
 {
     public class deptController : Controller
     {
         private readonly IDeptInterface _deptRepo;
+        private readonly IWebHostEnvironment _env;
 
 
         //private IDeptInterface _deptRepo;
 
-        public deptController(IDeptInterface DeptR)
+        public deptController(IDeptInterface DeptR , IWebHostEnvironment env)
         {
             _deptRepo = DeptR;
+            _env = env;
 
             //_deptRepo = DeptR;
         }
@@ -55,7 +63,7 @@ namespace MVC3.PL.Controllers
 
 
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? id,string ViewName="Details")
         {
 
             if (!id.HasValue)
@@ -71,10 +79,76 @@ namespace MVC3.PL.Controllers
             }
 
 
-            return View(Thedept);
+            return View(ViewName,Thedept);
 
         }
 
 
+
+        [HttpGet]
+        public IActionResult Update(int? id)
+        {
+
+            //if (!id.HasValue)
+            //{
+            //    return BadRequest();
+            //}
+
+            //var Thedept = _deptRepo.GetById(id.Value);
+
+            //if (Thedept is null)
+            //{
+            //    return NotFound();
+            //}
+
+
+            //return View(Thedept);
+
+
+            return Details(id, "Update");
+
+        }
+
+
+
+
+        [HttpPost]
+        public IActionResult Update(Department department)
+        {
+
+            if (!ModelState.IsValid) {
+            
+                return View(department);
+            }
+
+            try
+            {
+                _deptRepo.Update(department);
+                return RedirectToAction("Index");
+            }
+            catch (System.Exception  ex)
+            {
+                if (_env.IsDevelopment())
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+
+                }
+
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Error Excuted");
+                }
+
+                return View(department);
+            }
+
+
+
+
+        }
     }
 }
+
+
+
+   
