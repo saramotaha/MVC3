@@ -49,6 +49,7 @@ namespace MVC3
             services.AddDbContext<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("TheDefault")));
 
             services.AddScoped<IDeptInterface, DeptRepo>();
+            services.AddScoped<IEmployeeInterface, EmployeeRepo>();
 
            
 
