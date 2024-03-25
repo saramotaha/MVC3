@@ -42,15 +42,15 @@
                     <td>@employee.Gender</td>
                     <td>@Html.DisplayFor(w => employee.IsActive)</td>
                     <td>
-                        <a asp-controller="dept" asp-action="Details" asp-route-id="@employee.Id" class="btn btn-warning">Details</a>
+                        <a asp-controller="Emp" asp-action="Details" asp-route-id="@employee.Id" class="btn btn-warning">Details</a>
 
                     </td>
                     <td>
-                        <a asp-controller="dept" asp-action="Update" asp-route-id="@employee.Id" class="btn btn-warning">Update</a>
+                        <a asp-controller="Emp" asp-action="Update" asp-route-id="@employee.Id" class="btn btn-warning">Update</a>
 
                     </td>
                     <td>
-                        <a asp-controller="dept" asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-warning">Delete</a>
+                        <a asp-controller="Emp" asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-warning">Delete</a>
 
                     </td>
                     @* <td>@Html.DisplayNameFor(D => D.DateOfCreation)</td> *@
