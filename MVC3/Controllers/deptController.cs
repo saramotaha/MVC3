@@ -30,6 +30,11 @@ namespace MVC3.PL.Controllers
 
         public IActionResult Index()
         {
+
+            ViewData["Message"] = "Hello and Welcome Here using ViewData";
+
+            ViewBag.Message= "Hi ,,,, Sara  using ViewBag";
+
             var departments = _deptRepo.GetAll();
             return View(departments);
         }
