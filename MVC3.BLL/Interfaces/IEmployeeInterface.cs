@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace MVC3.BLL.Interfaces
 {
-    public interface IEmployeeInterface
+    public interface IEmployeeInterface:IGenericInterface<Employee>
     {
-        IEnumerable<Employee> GetAll();
-        Employee GetById(int id);
-        int Add(Employee E);
-        int Update(Employee E);
-        int Delete(Employee E);
+        IQueryable<Employee>  GetEmpByAddress(string address);
     }
 }

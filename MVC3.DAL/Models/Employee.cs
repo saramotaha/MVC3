@@ -28,12 +28,9 @@ namespace MVC3.DAL.Models
     }
 
 
-    public class Employee
+    public class Employee:ModelBase
     {
-        public int Id { get; set; }
-
-
-
+      
 
         [Required]
         [MaxLength(50,ErrorMessage ="Max Lenght is 50")]

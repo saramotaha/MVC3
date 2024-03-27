@@ -35,18 +35,8 @@
                     <td>@dept.Code</td>
                     <td>@dept.Name</td>
                     <td>@dept.DateOfCreation</td>
-                    <td>
-                        <a asp-controller="dept" asp-action="Details" asp-route-id="@dept.Id" class="btn btn-warning">Details</a>
-                      
-                    </td>
-                    <td>
-                        <a asp-controller="dept" asp-action="Update" asp-route-id="@dept.Id" class="btn btn-warning">Update</a>
-                        
-                    </td> 
-                    <td>
-                        <a asp-controller="dept" asp-action="Delete" asp-route-id="@dept.Id" class="btn btn-warning">Delete</a>
-                        
-                    </td>
+
+                    <partial name="_ButtonPartial" model="@dept.Id"></partial>
                     @* <td>@Html.DisplayNameFor(D => D.DateOfCreation)</td> *@
                 </tr>
                 

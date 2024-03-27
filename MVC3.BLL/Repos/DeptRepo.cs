@@ -10,54 +10,12 @@ using System.Threading.Tasks;
 
 namespace MVC3.BLL.Repos
 {
-    public class DeptRepo : IDeptInterface
+    public class DeptRepo : GenericRepo<Department>, IDeptInterface
     {
-        private readonly AppDbContext _appDbContext;
-
-        public DeptRepo(AppDbContext  appDbContext)
+        public DeptRepo(AppDbContext appDbContext) :base(appDbContext)
         {
-
-            _appDbContext = appDbContext;
             
         }
-        public int Add(Department d)
-        {
-            _appDbContext.Departments.Add(d);
 
-            return _appDbContext.SaveChanges();
-        }
-
-        public int Delete(Department d)
-        {
-            _appDbContext.Departments.Remove(d);
-            return (_appDbContext.SaveChanges());
-
-        }
-
-        public IEnumerable<Department> GetAll()
-        {
-            return _appDbContext.Departments.AsNoTracking().ToList();
-        }
-
-        public Department GetById(int id)
-        {
-            //var dept = _appDbContext.Departments.Local.Where(d => d.Id == id).FirstOrDefault();
-            //if(dept == null)
-            //{
-            //    dept = _appDbContext.Departments.Where(d => d.Id == id).FirstOrDefault();
-            //}
-
-            //return dept;
-
-
-
-            return _appDbContext.Departments.Find(id);
-        }
-
-        public int Update(Department d)
-        {
-            _appDbContext.Departments.Update(d);
-            return (_appDbContext.SaveChanges());
-        }
     }
 }

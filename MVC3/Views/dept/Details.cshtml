@@ -11,20 +11,7 @@
  
 <div>
 
-    <div class="form-group">
-        <label class="col-form-label" asp-for="Code"></label>
-        <input class="form-control" asp-for="Code" readonly />
-    </div>
-
-    <div class="form-group">
-        <label class="col-form-label" asp-for="Name"></label>
-        <input class="form-control" asp-for="Name" readonly />
-    </div>
-
-    <div class="form-group">
-        <label class="col-form-label" asp-for="DateOfCreation"></label>
-        <input class="form-control" asp-for="DateOfCreation" readonly />
-    </div>
+    <partial name="PartialViews/_DetailsDeleteCommoCode" />
 
 
     <a class="btn btn-primary" asp-action="Update" asp-route-id="@Model.Id">Edit</a>

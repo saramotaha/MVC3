@@ -41,18 +41,9 @@
                     <td>@Html.DisplayFor(w => employee.Salary)</td>
                     <td>@employee.Gender</td>
                     <td>@Html.DisplayFor(w => employee.IsActive)</td>
-                    <td>
-                        <a asp-controller="Emp" asp-action="Details" asp-route-id="@employee.Id" class="btn btn-warning">Details</a>
 
-                    </td>
-                    <td>
-                        <a asp-controller="Emp" asp-action="Update" asp-route-id="@employee.Id" class="btn btn-warning">Update</a>
 
-                    </td>
-                    <td>
-                        <a asp-controller="Emp" asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-warning">Delete</a>
-
-                    </td>
+                    <partial name="_ButtonPartial"  model="@employee.Id"></partial>
                     @* <td>@Html.DisplayNameFor(D => D.DateOfCreation)</td> *@
                 </tr>
 

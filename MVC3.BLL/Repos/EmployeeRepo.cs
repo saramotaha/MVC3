@@ -10,71 +10,17 @@ using System.Threading.Tasks;
 
 namespace MVC3.BLL.Repos
 {
-    public class EmployeeRepo: IEmployeeInterface
+    public class EmployeeRepo : GenericRepo<Employee>, IEmployeeInterface
     {
-        private readonly AppDbContext _appDbContext;
-
-        public EmployeeRepo(AppDbContext appDbContext)
+        public EmployeeRepo(AppDbContext appDbContext) :base(appDbContext)
         {
-
-            _appDbContext = appDbContext;
-
+            
+        }
+        public IQueryable<Employee> GetEmpByAddress(string address)
+        {
+            return _appDbContext.Employees.Where(w => w.Address.ToLower() == address.ToLower());
         }
 
-
-        public IEnumerable<Employee> GetAll()
-        {
-            return _appDbContext.Employees.AsNoTracking().ToList();
-        }
-
-
-
-        public Employee GetById(int id)
-        {
-            //var dept = _appDbContext.Departments.Local.Where(d => d.Id == id).FirstOrDefault();
-            //if(dept == null)
-            //{
-            //    dept = _appDbContext.Departments.Where(d => d.Id == id).FirstOrDefault();
-            //}
-
-            //return dept;
-
-
-
-            return _appDbContext.Employees.Find(id);
-        }
-
-
-
-
-
-
-
-        public int Add(Employee E)
-        {
-            _appDbContext.Employees.Add(E);
-
-            return _appDbContext.SaveChanges();
-        }
-
-
-        
-
-        public int Update(Employee E)
-        {
-            _appDbContext.Employees.Update(E);
-            return (_appDbContext.SaveChanges());
-        }
-
-
-
-
-        public int Delete(Employee E)
-        {
-            _appDbContext.Employees.Remove(E);
-            return (_appDbContext.SaveChanges());
-
-        }
-
+  
     }
 }
