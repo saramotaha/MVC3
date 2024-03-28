@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using MVC3.BLL.Interfaces;
 using MVC3.BLL.Repos;
 using MVC3.DAL.Data;
+using MVC3.PL.Extentions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,12 +47,13 @@ namespace MVC3
             //services.AddDbContext<AppDbContext>(option=>option.UseSqlServer("Server=.;Database=AppMVC3;Trusted_Connection=True;MultipleActiveResultSets=True;Encrypt=False"));
 
 
-            services.AddDbContext<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("TheDefault")));
+            services.AddDbContext<AppDbContext>(option => { option.UseSqlServer(Configuration.GetConnectionString("TheDefault")); 
+            },ServiceLifetime.Scoped);
 
-            services.AddScoped<IDeptInterface, DeptRepo>();
-            services.AddScoped<IEmployeeInterface, EmployeeRepo>();
+            services.AddServices();
 
-           
+
+
 
         }
 
