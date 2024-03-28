@@ -44,6 +44,7 @@ namespace MVC3.PL.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            TempData.Keep();
             return View();
         }
 
@@ -57,8 +58,15 @@ namespace MVC3.PL.Controllers
                 var c=_deptRepo.Add(department);
                 if(c>0)
                 {
-                    return RedirectToAction("Index");
+                    TempData["Message"] = "Welcome U Have Created A Department";
+  
                 }
+                else
+                {
+                    TempData["Message"] = "Error !  There Is No Department Created";
+
+                }
+                return RedirectToAction("Index");
 
             }
 

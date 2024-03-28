@@ -7,9 +7,15 @@
 }
 
 
-<div class="alert alert-danger">@ViewData["Message"]</div>
+@* <div class="alert alert-danger">@ViewData["Message"]</div>
 
-<div class="alert alert-success">@ViewBag.Message</div>
+<div class="alert alert-success">@ViewBag.Message</div> *@
+
+@if (!string.IsNullOrEmpty(TempData["Message"] as string))
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+    
+}
 
 <h1>Index</h1>
 <br />
