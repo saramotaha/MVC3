@@ -10,5 +10,7 @@ namespace MVC3.BLL.Interfaces
     public interface IEmployeeInterface:IGenericInterface<Employee>
     {
         IQueryable<Employee>  GetEmpByAddress(string address);
+
+        IQueryable<Employee> SeachByName(string name);
     }
 }

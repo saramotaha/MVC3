@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using MVC3.BLL.Interfaces;
 using MVC3.DAL.Models;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MVC3.PL.Controllers
 {
@@ -20,10 +23,20 @@ namespace MVC3.PL.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Index(string SearchIn)
         {
-            var Employees = _EmpRepo.GetAll();
+            var Employees = Enumerable.Empty<Employee>();
+            if (string.IsNullOrEmpty(SearchIn))
+            {
+                 Employees = _EmpRepo.GetAll();
+                
+            }
+            else
+            {
+                 Employees = _EmpRepo.SeachByName(SearchIn.ToLower());
+            }
             return View(Employees);
+
         }
 
 
