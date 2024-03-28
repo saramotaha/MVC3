@@ -18,5 +18,7 @@ namespace MVC3.DAL.Models
         public string Name { get; set; }
         public DateTime DateOfCreation { get; set; }
 
+        public ICollection<Employee> Employees { get; set; } =new HashSet<Employee> ();
+
     }
 }
