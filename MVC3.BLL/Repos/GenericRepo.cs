@@ -26,7 +26,14 @@ namespace MVC3.BLL.Repos
 
         public IEnumerable<T> GetAll()
         {
-            return _appDbContext.Set<T>().AsNoTracking().ToList();
+            if (typeof(T) == typeof(Employee)){
+                return (IEnumerable<T>)_appDbContext.Employees.Include(E => E.Department).AsNoTracking().ToList();
+            }
+            else
+            {
+                return _appDbContext.Set<T>().AsNoTracking().ToList();
+            }
+            
         }
 
 

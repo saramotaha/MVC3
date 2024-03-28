@@ -11,14 +11,12 @@ namespace MVC3.PL.Controllers
             private readonly IEmployeeInterface _EmpRepo;
             private readonly IWebHostEnvironment _env;
 
-
         //private IDeptInterface _deptRepo;
 
         public EmpController(IEmployeeInterface EmpR, IWebHostEnvironment env)
         {
             _EmpRepo = EmpR;
             _env = env;
-
         }
 
 
@@ -33,6 +31,7 @@ namespace MVC3.PL.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            //ViewData["Departments"]=_departmentRepo.GetAll();
             return View();
         }
 
@@ -82,6 +81,7 @@ namespace MVC3.PL.Controllers
         [HttpGet]
         public IActionResult Update(int? id)
         {
+            //ViewData["Departments"] = _departmentRepo.GetAll();
 
             //if (!id.HasValue)
             //{
