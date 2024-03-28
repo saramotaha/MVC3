@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace MVC3
 {
@@ -48,11 +49,14 @@ namespace MVC3
 
 
             services.AddDbContext<AppDbContext>(option => { option.UseSqlServer(Configuration.GetConnectionString("TheDefault")); 
-            },ServiceLifetime.Scoped);
+            }/*,ServiceLifetime.Scoped*/);
+
 
             services.AddServices();
 
 
+           
+            
 
 
         }

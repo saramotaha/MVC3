@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MVC3.BLL.Interfaces;
 using MVC3.BLL.Repos;
+using AutoMapper;
+using MVC3.PL.Profiles;
 
 namespace MVC3.PL.Extentions
 {
@@ -14,6 +16,9 @@ namespace MVC3.PL.Extentions
             //services.AddSingleton<IDeptInterface, DeptRepo>();
 
             services.AddScoped<IEmployeeInterface, EmployeeRepo>();
+
+            services.AddAutoMapper(M=>M.AddProfile(new MappingProfiles()));
+
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using MVC3.BLL.Interfaces;
 using MVC3.DAL.Models;
+using MVC3.PL.ViewModels;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +13,16 @@ namespace MVC3.PL.Controllers
 {
     public class EmpController : Controller
     { 
-            private readonly IEmployeeInterface _EmpRepo;
-            private readonly IWebHostEnvironment _env;
+        private readonly IEmployeeInterface _EmpRepo;
+        private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _env;
 
         //private IDeptInterface _deptRepo;
 
-        public EmpController(IEmployeeInterface EmpR, IWebHostEnvironment env)
+        public EmpController(IEmployeeInterface EmpR,IMapper mapper, IWebHostEnvironment env)
         {
             _EmpRepo = EmpR;
+            _mapper = mapper;
             _env = env;
         }
 
@@ -35,6 +39,7 @@ namespace MVC3.PL.Controllers
             {
                  Employees = _EmpRepo.SeachByName(SearchIn.ToLower());
             }
+            var mappedEmp = _mapper.Map<IEnumerable<Employee>,IEnumerable<EmpViewModel>>(Employees);
             return View(Employees);
 
         }
@@ -51,11 +56,17 @@ namespace MVC3.PL.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Employee employee)
+        public IActionResult Create(EmpViewModel EmployeeVM)
         {
             if (ModelState.IsValid)
             {
-                var c = _EmpRepo.Add(employee);
+                //var Mapped=new Employee()
+                //{
+
+                //}
+
+                var mappedEmp = _mapper.Map<EmpViewModel, Employee>(EmployeeVM);
+                var c = _EmpRepo.Add(mappedEmp);
                 if (c > 0)
                 {
                     return RedirectToAction("Index");
@@ -63,7 +74,7 @@ namespace MVC3.PL.Controllers
 
             }
 
-            return View(employee);
+            return View(EmployeeVM);
         }
 
 
@@ -76,8 +87,10 @@ namespace MVC3.PL.Controllers
             {
                 return BadRequest();
             }
+           
 
             var TheEmp = _EmpRepo.GetById(id.Value);
+            var mappedEmp = _mapper.Map<Employee, EmpViewModel>(TheEmp);
 
             if (TheEmp is null)
             {
@@ -85,7 +98,7 @@ namespace MVC3.PL.Controllers
             }
 
 
-            return View(ViewName, TheEmp);
+            return View(ViewName, mappedEmp);
 
         }
 
@@ -121,21 +134,22 @@ namespace MVC3.PL.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Update([FromRoute] int id, Employee employee)
+        public IActionResult Update([FromRoute] int id, EmpViewModel EmployeeVM)
         {
-            if (id != employee.Id)
+            if (id !=EmployeeVM.Id)
             {
                 return BadRequest("Error ");
             }
             if (!ModelState.IsValid)
             {
 
-                return View(employee);
+                return View(EmployeeVM);
             }
 
             try
             {
-                _EmpRepo.Update(employee);
+                var mappedEmp = _mapper.Map<EmpViewModel, Employee>(EmployeeVM);
+                _EmpRepo.Update(mappedEmp);
                 return RedirectToAction("Index");
             }
             catch (System.Exception ex)
@@ -151,7 +165,7 @@ namespace MVC3.PL.Controllers
                     ModelState.AddModelError(string.Empty, "Error Excuted");
                 }
 
-                return View(employee);
+                return View(EmployeeVM);
             }
 
 
@@ -169,9 +183,10 @@ namespace MVC3.PL.Controllers
 
 
         [HttpPost]
-        public IActionResult Delete(Employee employee)
+        public IActionResult Delete(EmpViewModel EmployeeVM)
         {
-            _EmpRepo.Delete(employee);
+            var mappedEmp = _mapper.Map<EmpViewModel, Employee>(EmployeeVM);
+            _EmpRepo.Delete(mappedEmp);
             return RedirectToAction("Index");
 
         }
