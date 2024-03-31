@@ -13,15 +13,17 @@ namespace MVC3.PL.Controllers
 {
     public class deptController : Controller
     {
-        private readonly IDeptInterface _deptRepo;
+       // private readonly IDeptInterface _deptRepo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _env;
 
 
         //private IDeptInterface _deptRepo;
 
-        public deptController(IDeptInterface DeptR , IWebHostEnvironment env)
+        public deptController(/*IDeptInterface DeptR*/ IUnitOfWork unitOfWork , IWebHostEnvironment env)
         {
-            _deptRepo = DeptR;
+            //_deptRepo = DeptR;
+            _unitOfWork = unitOfWork;
             _env = env;
 
             //_deptRepo = DeptR;
@@ -35,7 +37,7 @@ namespace MVC3.PL.Controllers
 
             ViewBag.Message= "Hi ,,,, Sara  using ViewBag";
 
-            var departments = _deptRepo.GetAll();
+            var departments = _unitOfWork.DepartmentRepositry.GetAll();
             return View(departments);
         }
 
@@ -55,7 +57,8 @@ namespace MVC3.PL.Controllers
         {
            if(ModelState.IsValid)
             {
-                var c=_deptRepo.Add(department);
+                _unitOfWork.DepartmentRepositry.Add(department);
+                var c = _unitOfWork.complete();
                 if(c>0)
                 {
                     TempData["Message"] = "Welcome U Have Created A Department";
@@ -84,7 +87,7 @@ namespace MVC3.PL.Controllers
                 return BadRequest();
             }
 
-            var Thedept = _deptRepo.GetById(id.Value);
+            var Thedept = _unitOfWork.DepartmentRepositry.GetById(id.Value);
             
             if(Thedept is null)
             {
@@ -140,7 +143,9 @@ namespace MVC3.PL.Controllers
 
             try
             {
-                _deptRepo.Update(department);
+                _unitOfWork.DepartmentRepositry.Update(department);
+                _unitOfWork.complete();
+
                 return RedirectToAction("Index");
             }
             catch (System.Exception  ex)
@@ -176,7 +181,8 @@ namespace MVC3.PL.Controllers
         [HttpPost]
         public IActionResult Delete(Department department)
         {
-            _deptRepo.Delete(department);
+            _unitOfWork.DepartmentRepositry.Delete(department);
+            _unitOfWork.complete();
             return RedirectToAction("Index");
 
         }

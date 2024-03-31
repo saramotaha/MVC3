@@ -7,11 +7,11 @@
 
 @model EmpViewModel
 
-@inject IDeptInterface DepartmentRepo
+@inject IUnitOfWork _UnitOfWork
 
 @{
     // var Depts= new SelectList(ViewData["Departments"] as IEnumerable<Department>,nameof(Department.Id) ,  nameof(Department.Name));
-    var Depts= new SelectList(DepartmentRepo.GetAll(),nameof(Department.Id) ,  nameof(Department.Name));
+    var Depts= new SelectList(_UnitOfWork.DepartmentRepositry.GetAll(),nameof(Department.Id) ,  nameof(Department.Name));
 }
 
 <div class="form-group">

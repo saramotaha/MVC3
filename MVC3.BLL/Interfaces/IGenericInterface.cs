@@ -11,8 +11,8 @@ namespace MVC3.BLL.Interfaces
     {
         IEnumerable<T> GetAll();
         T GetById(int id);
-        int Add(T d);
-        int Update(T d);
-        int Delete(T d);
+        void Add(T d);
+        void Update(T d);
+        void Delete(T d);
     }
 }

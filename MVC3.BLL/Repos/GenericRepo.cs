@@ -59,29 +59,29 @@ namespace MVC3.BLL.Repos
 
 
 
-        public int Add(T E)
+        public void Add(T E)
         {
             _appDbContext.Set<T>().Add(E);
 
-            return _appDbContext.SaveChanges();
+            //return _appDbContext.SaveChanges();
         }
 
 
 
 
-        public int Update(T E)
+        public void Update(T E)
         {
             _appDbContext.Set<T>().Update(E);
-            return (_appDbContext.SaveChanges());
+            //return (_appDbContext.SaveChanges());
         }
 
 
 
 
-        public int Delete(T E)
+        public void Delete(T E)
         {
             _appDbContext.Set<T>().Remove(E);
-            return (_appDbContext.SaveChanges());
+            //return (_appDbContext.SaveChanges());
 
         }
     }
