@@ -12,9 +12,9 @@ namespace MVC3.BLL.Interfaces
 
         IEnumerable<Department> GetAll();
         Department GetById(int id);
-        int Add(Department d);
-        int Update(Department d);
-        int Delete(Department d);
+        void Add(Department d);
+        void Update(Department d);
+        void Delete(Department d);
 
 
 

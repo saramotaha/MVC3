@@ -37,7 +37,7 @@ namespace MVC3.PL.Controllers
 
             ViewBag.Message= "Hi ,,,, Sara  using ViewBag";
 
-            var departments = _unitOfWork.DepartmentRepositry.GetAll();
+            var departments = _unitOfWork.Repo<Department>().GetAll();
             return View(departments);
         }
 
@@ -57,7 +57,7 @@ namespace MVC3.PL.Controllers
         {
            if(ModelState.IsValid)
             {
-                _unitOfWork.DepartmentRepositry.Add(department);
+                _unitOfWork.Repo<Department>().Add(department);
                 var c = _unitOfWork.complete();
                 if(c>0)
                 {
@@ -87,7 +87,7 @@ namespace MVC3.PL.Controllers
                 return BadRequest();
             }
 
-            var Thedept = _unitOfWork.DepartmentRepositry.GetById(id.Value);
+            var Thedept = _unitOfWork.Repo<Department>().GetById(id.Value);
             
             if(Thedept is null)
             {
@@ -143,7 +143,7 @@ namespace MVC3.PL.Controllers
 
             try
             {
-                _unitOfWork.DepartmentRepositry.Update(department);
+                _unitOfWork.Repo<Department>().Update(department);
                 _unitOfWork.complete();
 
                 return RedirectToAction("Index");
@@ -181,7 +181,7 @@ namespace MVC3.PL.Controllers
         [HttpPost]
         public IActionResult Delete(Department department)
         {
-            _unitOfWork.DepartmentRepositry.Delete(department);
+            _unitOfWork.Repo<Department>().Delete(department);
             _unitOfWork.complete();
             return RedirectToAction("Index");
 

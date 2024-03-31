@@ -11,7 +11,7 @@
 
 @{
     // var Depts= new SelectList(ViewData["Departments"] as IEnumerable<Department>,nameof(Department.Id) ,  nameof(Department.Name));
-    var Depts= new SelectList(_UnitOfWork.DepartmentRepositry.GetAll(),nameof(Department.Id) ,  nameof(Department.Name));
+    var Depts = new SelectList(_UnitOfWork.Repo<Department>().GetAll(), nameof(Department.Id), nameof(Department.Name));
 }
 
 <div class="form-group">

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using MVC3.BLL.Interfaces;
+using MVC3.BLL.Repos;
 using MVC3.DAL.Models;
 using MVC3.PL.ViewModels;
 using System.Collections;
@@ -33,14 +34,16 @@ namespace MVC3.PL.Controllers
         public IActionResult Index(string SearchIn)
         {
             var Employees = Enumerable.Empty<Employee>();
+            var EmpRepositry = _unitOfWork.Repo<Employee>() as EmployeeRepo;
+
             if (string.IsNullOrEmpty(SearchIn))
             {
-                 Employees = _unitOfWork.EmployeeRepositry.GetAll();
+                 Employees = _unitOfWork.Repo<Employee>().GetAll();
                 
             }
             else
             {
-                 Employees = _unitOfWork.EmployeeRepositry.SeachByName(SearchIn.ToLower());
+                 Employees = EmpRepositry.SeachByName(SearchIn.ToLower());
             }
             var mappedEmp = _mapper.Map<IEnumerable<Employee>,IEnumerable<EmpViewModel>>(Employees);
             return View(Employees);
@@ -69,7 +72,7 @@ namespace MVC3.PL.Controllers
                 //}
 
                 var mappedEmp = _mapper.Map<EmpViewModel, Employee>(EmployeeVM);
-                _unitOfWork.EmployeeRepositry.Add(mappedEmp);
+                _unitOfWork.Repo<Employee>().Add(mappedEmp);
                 var c = _unitOfWork.complete();
                 if (c > 0)
                 {
@@ -93,7 +96,7 @@ namespace MVC3.PL.Controllers
             }
            
 
-            var TheEmp = _unitOfWork.EmployeeRepositry.GetById(id.Value);
+            var TheEmp = _unitOfWork.Repo<Employee>().GetById(id.Value);
             var mappedEmp = _mapper.Map<Employee, EmpViewModel>(TheEmp);
 
             if (TheEmp is null)
@@ -153,7 +156,7 @@ namespace MVC3.PL.Controllers
             try
             {
                 var mappedEmp = _mapper.Map<EmpViewModel, Employee>(EmployeeVM);
-                _unitOfWork.EmployeeRepositry.Update(mappedEmp);
+                _unitOfWork.Repo<Employee>().Update(mappedEmp);
                 _unitOfWork.complete();
                 return RedirectToAction("Index");
             }
@@ -191,7 +194,7 @@ namespace MVC3.PL.Controllers
         public IActionResult Delete(EmpViewModel EmployeeVM)
         {
             var mappedEmp = _mapper.Map<EmpViewModel, Employee>(EmployeeVM);
-            _unitOfWork.EmployeeRepositry.Delete(mappedEmp);
+            _unitOfWork.Repo<Employee>().Delete(mappedEmp);
             _unitOfWork.complete();
             return RedirectToAction("Index");
 
