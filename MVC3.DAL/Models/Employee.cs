@@ -82,6 +82,7 @@ namespace MVC3.DAL.Models
 
         public bool IsDeleted { get; set; } = false;
 
+        public string imageName { get; set; }
         public int? DepartmentId { get; set; }
 
         public virtual Department Department { get; set; }

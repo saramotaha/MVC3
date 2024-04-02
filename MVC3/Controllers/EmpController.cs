@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using MVC3.BLL.Interfaces;
 using MVC3.BLL.Repos;
 using MVC3.DAL.Models;
+using MVC3.PL.Helpers;
 using MVC3.PL.ViewModels;
 using System.Collections;
 using System.Collections.Generic;
@@ -66,16 +67,25 @@ namespace MVC3.PL.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                //var fileName=documentSetting.UploadFile(EmployeeVM.Image, "Images");
+
+                EmployeeVM.imageName = documentSetting.UploadFile(EmployeeVM.Image, "Images");
                 //var Mapped=new Employee()
                 //{
 
                 //}
 
                 var mappedEmp = _mapper.Map<EmpViewModel, Employee>(EmployeeVM);
+
+                //mappedEmp.imageName = fileName;
+
+
                 _unitOfWork.Repo<Employee>().Add(mappedEmp);
                 var c = _unitOfWork.complete();
                 if (c > 0)
                 {
+                   
                     return RedirectToAction("Index");
                 }
 

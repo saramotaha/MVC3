@@ -1,6 +1,7 @@
 ﻿using MVC3.DAL.Models;
 using System.ComponentModel.DataAnnotations;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace MVC3.PL.ViewModels
 {
@@ -66,6 +67,9 @@ namespace MVC3.PL.ViewModels
         public int? DepartmentId { get; set; }
 
         public virtual Department Department { get; set; }
+        public IFormFile Image { get; set; }
+
+        public string imageName { get; set; }
     }
 }
 
