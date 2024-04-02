@@ -45,8 +45,8 @@ namespace MVC3.PL.Controllers
             {
                  Employees = EmpRepositry.SeachByName(SearchIn.ToLower());
             }
-            var mappedEmp = _mapper.Map<IEnumerable<Employee>,IEnumerable<EmpViewModel>>(Employees);
-            return View(Employees);
+            var mappedEmp = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmpViewModel>>(Employees);
+            return View(mappedEmp);
 
         }
 

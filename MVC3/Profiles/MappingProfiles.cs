@@ -8,7 +8,7 @@ namespace MVC3.PL.Profiles
     {
         public MappingProfiles()
         {
-            CreateMap<EmpViewModel, Employee>().ReverseMap();
+            CreateMap<EmpViewModel,Employee>().ReverseMap();
         }
     }
 }

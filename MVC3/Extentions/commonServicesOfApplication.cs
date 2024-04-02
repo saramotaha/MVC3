@@ -19,7 +19,7 @@ namespace MVC3.PL.Extentions
             //services.AddScoped<IEmployeeInterface, EmployeeRepo>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            //services.AddAutoMapper(M=>M.AddProfile(new MappingProfiles()));
+            services.AddAutoMapper(M=>M.AddProfile(new MappingProfiles()));
 
 
         }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EmpViewModel>;
+﻿@model IEnumerable<MVC3.PL.ViewModels.EmpViewModel>
 @{
     ViewData["Title"] = "Index";
 }
@@ -14,16 +14,20 @@
     <form class="row col-8 offset-2">
         <div class="col-8">
             <input type="text" name="SearchIn" id="SearchIn" class="form-control" placeholder="Search By Name......" />
-        </div>  
+        </div>
         <div class="col-4">
-            <input type="submit"  value="Search" class="btn btn-success"/>
+            <input type="submit" value="Search" class="btn btn-success" />
         </div>
     </form>
 </div>
 
 
+
+
 @if (Model.Count() > 0)
 {
+
+   
 
 
     <table class="table table-hover table-striped m-4">

@@ -1,17 +1,11 @@
 ﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-
-
 @model EmpViewModel
 
 @inject IUnitOfWork _UnitOfWork
 
 @{
     // var Depts= new SelectList(ViewData["Departments"] as IEnumerable<Department>,nameof(Department.Id) ,  nameof(Department.Name));
-    var Depts = new SelectList(_UnitOfWork.Repo<Department>().GetAll(), nameof(Department.Id), nameof(Department.Name));
+    var Depts = new SelectList(_UnitOfWork.Repo<Department>().GetAll() , nameof(Department.Id), nameof(Department.Name));
 }
 
 <div class="form-group">
