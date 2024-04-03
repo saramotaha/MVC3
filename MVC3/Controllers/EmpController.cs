@@ -7,6 +7,7 @@ using MVC3.BLL.Repos;
 using MVC3.DAL.Models;
 using MVC3.PL.Helpers;
 using MVC3.PL.ViewModels;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -114,6 +115,11 @@ namespace MVC3.PL.Controllers
                 return NotFound();
             }
 
+            if (ViewName.Equals("Delete", StringComparison.OrdinalIgnoreCase))
+            {
+                TempData["imageName"] = TheEmp.imageName;
+            }
+            
 
             return View(ViewName, mappedEmp);
 
@@ -203,10 +209,18 @@ namespace MVC3.PL.Controllers
         [HttpPost]
         public IActionResult Delete(EmpViewModel EmployeeVM)
         {
+            EmployeeVM.imageName = TempData["imageName"] as string;
             var mappedEmp = _mapper.Map<EmpViewModel, Employee>(EmployeeVM);
             _unitOfWork.Repo<Employee>().Delete(mappedEmp);
-            _unitOfWork.complete();
-            return RedirectToAction("Index");
+            var count=_unitOfWork.complete();
+            if (count > 0)
+            {
+                documentSetting.DeleteFile(EmployeeVM.imageName, "Images");
+                return RedirectToAction("Index");
+            }
+
+            return View(EmployeeVM);
+            
 
         }
     
