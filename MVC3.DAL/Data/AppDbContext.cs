@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MVC3.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MVC3.DAL.Data
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext: IdentityDbContext
     {
 
         public AppDbContext(DbContextOptions<AppDbContext> option) :base(option)
@@ -19,6 +20,7 @@ namespace MVC3.DAL.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             
