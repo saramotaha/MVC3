@@ -28,15 +28,15 @@ namespace MVC3.BLL
            
         }
 
-        public int complete()
+        public async Task<int> complete()
         {
-           return _appDbContext.SaveChanges();
+           return await _appDbContext.SaveChangesAsync();
 
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            _appDbContext.Dispose();
+           await _appDbContext.DisposeAsync();
         }
 
         public IGenericInterface<T> Repo<T>() where T : ModelBase

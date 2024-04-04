@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace MVC3.BLL.Interfaces
 {
-    public interface IDeptInterface
+    public interface IDeptInterface:IGenericInterface<Department>
     {
 
-        IEnumerable<Department> GetAll();
-        Department GetById(int id);
-        void Add(Department d);
-        void Update(Department d);
-        void Delete(Department d);
+        //Task<IEnumerable<Department>> GetAllAsync();
+        //Task<Department> GetByIdAsync(int id);
+        //void Add(Department d);
+        //void Update(Department d);
+        //void Delete(Department d);
 
 
 

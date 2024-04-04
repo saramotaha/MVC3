@@ -9,8 +9,8 @@ namespace MVC3.BLL.Interfaces
 {
     public interface IGenericInterface<T> where T : ModelBase
     {
-        IEnumerable<T> GetAll();
-        T GetById(int id);
+       Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetByIdAsync(int id);
         void Add(T d);
         void Update(T d);
         void Delete(T d);

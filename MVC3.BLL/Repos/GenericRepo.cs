@@ -24,21 +24,21 @@ namespace MVC3.BLL.Repos
         }
 
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             if (typeof(T) == typeof(Employee)){
-                return (IEnumerable<T>)_appDbContext.Employees.Include(E => E.Department).AsNoTracking().ToList();
+                return (IEnumerable<T>) await _appDbContext.Employees.Include(E => E.Department).AsNoTracking().ToListAsync();
             }
             else
             {
-                return _appDbContext.Set<T>().AsNoTracking().ToList();
+                return await _appDbContext.Set<T>().AsNoTracking().ToListAsync();
             }
             
         }
 
 
 
-        public T GetById(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
             //var dept = _appDbContext.Departments.Local.Where(d => d.Id == id).FirstOrDefault();
             //if(dept == null)
@@ -50,7 +50,7 @@ namespace MVC3.BLL.Repos
 
 
 
-            return _appDbContext.Set<T>().Find(id);
+            return await _appDbContext.Set<T>().FindAsync(id);
         }
 
 

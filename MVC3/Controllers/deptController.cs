@@ -7,6 +7,7 @@ using MVC3.BLL.Interfaces;
 using MVC3.BLL.Repos;
 using MVC3.DAL.Models;
 using System;
+using System.Threading.Tasks;
 
 
 namespace MVC3.PL.Controllers
@@ -30,14 +31,14 @@ namespace MVC3.PL.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
             ViewData["Message"] = "Hello and Welcome Here using ViewData";
 
             ViewBag.Message= "Hi ,,,, Sara  using ViewBag";
 
-            var departments = _unitOfWork.Repo<Department>().GetAll();
+            var departments =await _unitOfWork.Repo<Department>().GetAllAsync();
             return View(departments);
         }
 
@@ -53,12 +54,12 @@ namespace MVC3.PL.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Department department)
+        public async Task<IActionResult> Create(Department department)
         {
            if(ModelState.IsValid)
             {
                 _unitOfWork.Repo<Department>().Add(department);
-                var c = _unitOfWork.complete();
+                var c =await _unitOfWork.complete();
                 if(c>0)
                 {
                     TempData["Message"] = "Welcome U Have Created A Department";
@@ -79,7 +80,7 @@ namespace MVC3.PL.Controllers
 
 
 
-        public IActionResult Details(int? id,string ViewName="Details")
+        public async Task<IActionResult> Details(int? id,string ViewName="Details")
         {
 
             if (!id.HasValue)
@@ -87,7 +88,7 @@ namespace MVC3.PL.Controllers
                 return BadRequest();
             }
 
-            var Thedept = _unitOfWork.Repo<Department>().GetById(id.Value);
+            var Thedept =await _unitOfWork.Repo<Department>().GetByIdAsync(id.Value);
             
             if(Thedept is null)
             {
@@ -102,7 +103,7 @@ namespace MVC3.PL.Controllers
 
 
         [HttpGet]
-        public IActionResult Update(int? id)
+        public async Task<IActionResult> Update(int? id)
         {
 
             //if (!id.HasValue)
@@ -121,7 +122,7 @@ namespace MVC3.PL.Controllers
             //return View(Thedept);
 
 
-            return Details(id, "Update");
+            return await Details(id, "Update");
 
         }
 
@@ -130,7 +131,7 @@ namespace MVC3.PL.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Update([FromRoute]int id , Department department)
+        public async Task<IActionResult> Update([FromRoute]int id , Department department)
         {
             if(id!=department.Id)
             {
@@ -144,7 +145,7 @@ namespace MVC3.PL.Controllers
             try
             {
                 _unitOfWork.Repo<Department>().Update(department);
-                _unitOfWork.complete();
+                await _unitOfWork.complete();
 
                 return RedirectToAction("Index");
             }
@@ -171,18 +172,18 @@ namespace MVC3.PL.Controllers
 
 
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            return Details(id, "Delete");
+            return await Details(id, "Delete");
         }
 
 
 
         [HttpPost]
-        public IActionResult Delete(Department department)
+        public async Task<IActionResult> Delete(Department department)
         {
             _unitOfWork.Repo<Department>().Delete(department);
-            _unitOfWork.complete();
+            await _unitOfWork.complete();
             return RedirectToAction("Index");
 
         }

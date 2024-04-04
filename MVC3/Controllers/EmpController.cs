@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MVC3.PL.Controllers
 {
@@ -33,14 +34,14 @@ namespace MVC3.PL.Controllers
         }
 
 
-        public IActionResult Index(string SearchIn)
+        public async Task<IActionResult> Index(string SearchIn)
         {
             var Employees = Enumerable.Empty<Employee>();
             var EmpRepositry = _unitOfWork.Repo<Employee>() as EmployeeRepo;
 
             if (string.IsNullOrEmpty(SearchIn))
             {
-                 Employees = _unitOfWork.Repo<Employee>().GetAll();
+                 Employees = await _unitOfWork.Repo<Employee>().GetAllAsync();
                 
             }
             else
@@ -48,7 +49,7 @@ namespace MVC3.PL.Controllers
                  Employees = EmpRepositry.SeachByName(SearchIn.ToLower());
             }
             var mappedEmp = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmpViewModel>>(Employees);
-            return View(mappedEmp);
+            return  View(mappedEmp);
 
         }
 
@@ -64,14 +65,14 @@ namespace MVC3.PL.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(EmpViewModel EmployeeVM)
+        public async Task<IActionResult> Create(EmpViewModel EmployeeVM)
         {
             if (ModelState.IsValid)
             {
 
                 //var fileName=documentSetting.UploadFile(EmployeeVM.Image, "Images");
 
-                EmployeeVM.imageName = documentSetting.UploadFile(EmployeeVM.Image, "Images");
+                EmployeeVM.imageName =await documentSetting.UploadFile(EmployeeVM.Image, "Images");
                 //var Mapped=new Employee()
                 //{
 
@@ -83,7 +84,7 @@ namespace MVC3.PL.Controllers
 
 
                 _unitOfWork.Repo<Employee>().Add(mappedEmp);
-                var c = _unitOfWork.complete();
+                var c =await _unitOfWork.complete();
                 if (c > 0)
                 {
                    
@@ -98,7 +99,7 @@ namespace MVC3.PL.Controllers
 
 
 
-        public IActionResult Details(int? id, string ViewName = "Details")
+        public async Task<IActionResult> Details(int? id, string ViewName = "Details")
         {
 
             if (!id.HasValue)
@@ -107,7 +108,7 @@ namespace MVC3.PL.Controllers
             }
            
 
-            var TheEmp = _unitOfWork.Repo<Employee>().GetById(id.Value);
+            var TheEmp =await _unitOfWork.Repo<Employee>().GetByIdAsync(id.Value);
             var mappedEmp = _mapper.Map<Employee, EmpViewModel>(TheEmp);
 
             if (TheEmp is null)
@@ -128,7 +129,7 @@ namespace MVC3.PL.Controllers
 
 
         [HttpGet]
-        public IActionResult Update(int? id)
+        public async Task<IActionResult> Update(int? id)
         {
             //ViewData["Departments"] = _departmentRepo.GetAll();
 
@@ -148,7 +149,7 @@ namespace MVC3.PL.Controllers
             //return View(Thedept);
 
 
-            return Details(id, "Update");
+            return await Details(id, "Update");
 
         }
 
@@ -157,7 +158,7 @@ namespace MVC3.PL.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Update([FromRoute] int id, EmpViewModel EmployeeVM)
+        public async Task<IActionResult> Update([FromRoute] int id, EmpViewModel EmployeeVM)
         {
             if (id !=EmployeeVM.Id)
             {
@@ -173,7 +174,7 @@ namespace MVC3.PL.Controllers
             {
                 var mappedEmp = _mapper.Map<EmpViewModel, Employee>(EmployeeVM);
                 _unitOfWork.Repo<Employee>().Update(mappedEmp);
-                _unitOfWork.complete();
+                await _unitOfWork.complete();
                 return RedirectToAction("Index");
             }
             catch (System.Exception ex)
@@ -199,20 +200,20 @@ namespace MVC3.PL.Controllers
 
 
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            return Details(id, "Delete");
+            return await Details(id, "Delete");
         }
 
 
 
         [HttpPost]
-        public IActionResult Delete(EmpViewModel EmployeeVM)
+        public async Task<IActionResult> Delete(EmpViewModel EmployeeVM)
         {
             EmployeeVM.imageName = TempData["imageName"] as string;
             var mappedEmp = _mapper.Map<EmpViewModel, Employee>(EmployeeVM);
             _unitOfWork.Repo<Employee>().Delete(mappedEmp);
-            var count=_unitOfWork.complete();
+            var count=await _unitOfWork.complete();
             if (count > 0)
             {
                 documentSetting.DeleteFile(EmployeeVM.imageName, "Images");
