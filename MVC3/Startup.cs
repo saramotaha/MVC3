@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using MVC3.DAL.Models;
 
 namespace MVC3
 {
@@ -54,9 +56,28 @@ namespace MVC3
 
             services.AddServices();
 
+            //services.AddScoped<UserManager<ApplicationUser>>();
+            //services.AddScoped<SignInManager<ApplicationUser>>();
+            //services.AddScoped<RoleManager<IdentityRole>>();
 
-           
-            
+
+
+
+
+            //services.AddIdentity<ApplicationUser, IdentityRole>(); 
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(option =>
+            {
+                option.Password.RequiredLength = 5;
+                //option.User.AllowedUserNameCharacters = "asjskjdfed5565";
+                option.User.RequireUniqueEmail = true;
+
+            }).AddEntityFrameworkStores<AppDbContext>();
+
+
+          
+
+
 
 
         }
